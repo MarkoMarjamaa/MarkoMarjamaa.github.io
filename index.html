@@ -1,0 +1,373 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta name="google-site-verification" content="YOUR_VERIFICATION_CODE_HERE" />
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Marko Marjamaa – Database & ETL Consultant</title>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Mono:wght@300;400;500&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --bg: #0d0f0e;
+      --surface: #141714;
+      --border: #1f241f;
+      --green: #4ade80;
+      --green-dim: #1a3a25;
+      --text: #d4dbd4;
+      --muted: #5a6b5a;
+      --white: #eef2ee;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: 'DM Mono', monospace;
+      font-weight: 300;
+      min-height: 100vh;
+      overflow-x: hidden;
+    }
+
+    /* Grid background */
+    body::before {
+      content: '';
+      position: fixed;
+      inset: 0;
+      background-image:
+        linear-gradient(var(--border) 1px, transparent 1px),
+        linear-gradient(90deg, var(--border) 1px, transparent 1px);
+      background-size: 48px 48px;
+      opacity: 0.4;
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    .container {
+      position: relative;
+      z-index: 1;
+      max-width: 860px;
+      margin: 0 auto;
+      padding: 0 2rem;
+    }
+
+    /* HEADER */
+    header {
+      padding: 4rem 0 3rem;
+      border-bottom: 1px solid var(--border);
+      opacity: 0;
+      transform: translateY(20px);
+      animation: fadeUp 0.7s ease forwards;
+    }
+
+    .tag {
+      display: inline-block;
+      font-size: 0.65rem;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: var(--green);
+      border: 1px solid var(--green-dim);
+      padding: 0.3rem 0.75rem;
+      border-radius: 2px;
+      margin-bottom: 1.5rem;
+    }
+
+    h1 {
+      font-family: 'DM Serif Display', serif;
+      font-size: clamp(2.8rem, 6vw, 4.5rem);
+      color: var(--white);
+      line-height: 1.05;
+      letter-spacing: -0.02em;
+      margin-bottom: 0.4rem;
+    }
+
+    h1 em {
+      font-style: italic;
+      color: var(--green);
+    }
+
+    .subtitle {
+      font-size: 0.8rem;
+      color: var(--muted);
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      margin-bottom: 1.8rem;
+    }
+
+    .summary {
+      font-size: 1rem;
+      line-height: 1.8;
+      color: var(--text);
+      max-width: 580px;
+      font-weight: 300;
+    }
+
+    /* STATS ROW */
+    .stats {
+      display: flex;
+      gap: 2.5rem;
+      flex-wrap: wrap;
+      padding: 2.5rem 0;
+      border-bottom: 1px solid var(--border);
+      opacity: 0;
+      animation: fadeUp 0.7s ease 0.15s forwards;
+    }
+
+    .stat-item {}
+    .stat-num {
+      font-family: 'DM Serif Display', serif;
+      font-size: 2.2rem;
+      color: var(--white);
+      line-height: 1;
+    }
+    .stat-num span { color: var(--green); }
+    .stat-label {
+      font-size: 0.65rem;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--muted);
+      margin-top: 0.3rem;
+    }
+
+    /* SECTION */
+    section {
+      padding: 3rem 0;
+      border-bottom: 1px solid var(--border);
+      opacity: 0;
+      animation: fadeUp 0.7s ease 0.3s forwards;
+    }
+
+    .section-label {
+      font-size: 0.6rem;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--green);
+      margin-bottom: 1.5rem;
+    }
+
+    /* SKILLS GRID */
+    .skills-grid {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+    }
+
+    .skill-chip {
+      font-size: 0.75rem;
+      padding: 0.4rem 0.9rem;
+      border: 1px solid var(--border);
+      border-radius: 2px;
+      color: var(--text);
+      background: var(--surface);
+      transition: border-color 0.2s, color 0.2s;
+      letter-spacing: 0.04em;
+    }
+    .skill-chip:hover {
+      border-color: var(--green);
+      color: var(--green);
+    }
+
+    /* EXPERIENCE */
+    .exp-list { display: flex; flex-direction: column; gap: 1.5rem; }
+
+    .exp-item {
+      display: grid;
+      grid-template-columns: 140px 1fr;
+      gap: 1rem;
+    }
+
+    .exp-years {
+      font-size: 0.7rem;
+      color: var(--muted);
+      padding-top: 0.2rem;
+      letter-spacing: 0.06em;
+    }
+
+    .exp-role {
+      font-size: 0.95rem;
+      color: var(--white);
+      margin-bottom: 0.2rem;
+    }
+
+    .exp-company {
+      font-size: 0.75rem;
+      color: var(--green);
+      letter-spacing: 0.06em;
+    }
+
+    .exp-desc {
+      font-size: 0.8rem;
+      color: var(--muted);
+      margin-top: 0.4rem;
+      line-height: 1.6;
+    }
+
+    /* CONTACT */
+    .contact-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 1rem;
+      padding: 2.5rem 0;
+      opacity: 0;
+      animation: fadeUp 0.7s ease 0.45s forwards;
+    }
+
+    .contact-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      font-size: 0.75rem;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--muted);
+      text-decoration: none;
+      border: 1px solid var(--border);
+      padding: 0.6rem 1.1rem;
+      border-radius: 2px;
+      transition: color 0.2s, border-color 0.2s;
+    }
+    .contact-link:hover { color: var(--green); border-color: var(--green); }
+    .contact-link svg { width: 13px; height: 13px; fill: currentColor; }
+
+    footer {
+      padding: 2rem 0;
+      font-size: 0.65rem;
+      color: var(--muted);
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      opacity: 0;
+      animation: fadeUp 0.7s ease 0.55s forwards;
+    }
+
+    @keyframes fadeUp {
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    @media (max-width: 560px) {
+      .exp-item { grid-template-columns: 1fr; gap: 0.3rem; }
+      .exp-years { padding-top: 0; }
+      .stats { gap: 1.5rem; }
+    }
+  </style>
+</head>
+<body>
+<div class="container">
+
+  <header>
+    <div class="tag">Available for consulting</div>
+    <h1>Marko<br><em>Marjamaa</em></h1>
+    <p class="subtitle">Database &amp; ETL Consultant &mdash; Helsinki, Finland</p>
+    <p class="summary">
+      Oracle &amp; PostgreSQL database specialist and ETL consultant with a passion for large-scale data systems. Founder of Datamyrsky tmi. The bigger the data, the better.
+    </p>
+  </header>
+
+  <div class="stats">
+    <div class="stat-item">
+      <div class="stat-num">30<span>+</span></div>
+      <div class="stat-label">Years experience</div>
+    </div>
+    <div class="stat-item">
+      <div class="stat-num">5</div>
+      <div class="stat-label">Certifications</div>
+    </div>
+    <div class="stat-item">
+      <div class="stat-num">4<span>+</span></div>
+      <div class="stat-label">Years independent</div>
+    </div>
+  </div>
+
+  <section>
+    <div class="section-label">// Core expertise</div>
+    <div class="skills-grid">
+      <span class="skill-chip">Oracle RDBMS</span>
+      <span class="skill-chip">PostgreSQL</span>
+      <span class="skill-chip">ETL Development</span>
+      <span class="skill-chip">Amazon Aurora</span>
+      <span class="skill-chip">Netezza</span>
+      <span class="skill-chip">Data Vault</span>
+      <span class="skill-chip">Pentaho</span>
+      <span class="skill-chip">Vertica</span>
+      <span class="skill-chip">Performance Optimization</span>
+      <span class="skill-chip">Data Modelling</span>
+      <span class="skill-chip">Big Data</span>
+      <span class="skill-chip">Process Automation</span>
+    </div>
+  </section>
+
+  <section style="animation-delay:0.35s">
+    <div class="section-label">// Experience</div>
+    <div class="exp-list">
+
+      <div class="exp-item">
+        <div class="exp-years">2022 – Present</div>
+        <div>
+          <div class="exp-role">Guru</div>
+          <div class="exp-company">Datamyrsky tmi</div>
+          <div class="exp-desc">Independent database and big data consulting. Espoo, Finland.</div>
+        </div>
+      </div>
+
+      <div class="exp-item">
+        <div class="exp-years">2014 – 2022</div>
+        <div>
+          <div class="exp-role">Guru</div>
+          <div class="exp-company">High Information Systems – Hi-IS</div>
+          <div class="exp-desc">8 years of senior-level data systems work.</div>
+        </div>
+      </div>
+
+      <div class="exp-item">
+        <div class="exp-years">2006 – 2014</div>
+        <div>
+          <div class="exp-role">Senior Consultant</div>
+          <div class="exp-company">Invenco Oy</div>
+          <div class="exp-desc">Oracle administration, performance optimization, migrations, database audits and ETL development.</div>
+        </div>
+      </div>
+
+      <div class="exp-item">
+        <div class="exp-years">2002 – 2006</div>
+        <div>
+          <div class="exp-role">Erikoissuunnittelija</div>
+          <div class="exp-company">Medici Data Oy</div>
+          <div class="exp-desc">Three-tier server and database-side development with BEA Tuxedo and Oracle. Performance optimization and data modelling.</div>
+        </div>
+      </div>
+
+      <div class="exp-item">
+        <div class="exp-years">1995 – 2002</div>
+        <div>
+          <div class="exp-role">Early career</div>
+          <div class="exp-company">Quartal Interactive / Medici Data / CCC Oy</div>
+          <div class="exp-desc">UML development, Visual Basic, SharePoint, Oracle RDBMS and server-side development.</div>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <div class="contact-row">
+    <a class="contact-link" href="mailto:marko.marjamaa@iki.fi">
+      <svg viewBox="0 0 24 24"><path d="M20 4H4c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4-8 5-8-5V6l8 5 8-5v2z"/></svg>
+      marko.marjamaa@iki.fi
+    </a>
+    <a class="contact-link" href="https://www.linkedin.com/in/markomarjamaa/" target="_blank" rel="noopener">
+      <svg viewBox="0 0 24 24"><path d="M19 3a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h14m-.5 15.5v-5.3a3.26 3.26 0 0 0-3.26-3.26c-.85 0-1.84.52-2.32 1.3v-1.11h-2.79v8.37h2.79v-4.93c0-.77.62-1.4 1.39-1.4a1.4 1.4 0 0 1 1.4 1.4v4.93h2.79M6.88 8.56a1.68 1.68 0 0 0 1.68-1.68c0-.93-.75-1.69-1.68-1.69a1.69 1.69 0 0 0-1.69 1.69c0 .93.76 1.68 1.69 1.68m1.39 9.94v-8.37H5.5v8.37h2.77z"/></svg>
+      LinkedIn
+    </a>
+    <a class="contact-link" href="http://flow-morewithless.blogspot.fi/search/label/Work" target="_blank" rel="noopener">
+      <svg viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-1 17.93c-3.95-.49-7-3.85-7-7.93 0-.62.08-1.21.21-1.79L9 15v1c0 1.1.9 2 2 2v1.93zm6.9-2.54c-.26-.81-1-1.39-1.9-1.39h-1v-3c0-.55-.45-1-1-1H8v-2h2c.55 0 1-.45 1-1V7h2c1.1 0 2-.9 2-2v-.41c2.93 1.19 5 4.06 5 7.41 0 2.08-.8 3.97-2.1 5.39z"/></svg>
+      Blog
+    </a>
+  </div>
+
+  <footer>
+    &copy; 2026 Marko Marjamaa &mdash; Datamyrsky tmi
+  </footer>
+
+</div>
+</body>
+</html>
